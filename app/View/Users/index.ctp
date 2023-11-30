@@ -9,6 +9,7 @@
         <li><?php echo 'Name: ' . $user['User']['name'] ?></li>
         <li><?php echo 'Email: ' .  $user['User']['email'] ?></li>
         <li><?php echo 'Phone: ' .  $user['User']['phone'] ?></li>
+        <?php echo $this->DeleteButton->renderButton('Delete User', ['controller' => 'users', 'action' => 'delete', $user['User']['id']]) ?>
     <?php endforeach; ?>
 </ul>
 <?php endif; ?>

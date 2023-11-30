@@ -5,6 +5,7 @@ App::uses('User','Model');
 App::uses('UserApiService', 'Service');
 
 class UsersController extends AppController {
+    public $components = array('RecordDeletion');
     public $name = 'Users';
 
     public function index() {
@@ -30,5 +31,10 @@ class UsersController extends AppController {
             }
         }
         $this->set('users', $users);
+    }
+
+    public function delete($id) {
+        $this->RecordDeletion->deleteRecord('User', $id);
+        return $this->redirect(['action'=> 'index']);
     }
 }

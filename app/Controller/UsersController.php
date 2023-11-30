@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('User','Model');
 App::uses('UserApiService', 'Service');
 
 class UsersController extends AppController {
@@ -14,11 +15,18 @@ class UsersController extends AppController {
             $users = $userApiService->get_users();
             if (!empty($users)) {
                 foreach ($users as $userData) {
-                    $user = $this->User->newEntity($userData);
-                    if (!$this->User->save($user)) {
-                        echo 'Error saving a user: ' . print_r($user->getErrors(), true);
+                    try {
+                        $user = $this->User->create($userData);
+                        if ($this->User->save($user)) {
+                            echo 'Users saved in Database';
+                        } else throw new Exception(`User creating user: $user`);
+
+                    } catch (\Throwable $th) {
+                        echo 'Error creating a user: ' . print_r($th, true);
                     }
                 }
+            } else {
+                echo 'Users retrieved from Database';
             }
         }
         $this->set('users', $users);

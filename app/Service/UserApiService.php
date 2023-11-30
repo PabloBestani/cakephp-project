@@ -13,7 +13,7 @@ class UserApiService {
             ]);
 
             $apiResponse = file_get_contents($this->apiUrl, false, $context);
-            $users = json_decode($apiResponse, false);
+            $users = json_decode($apiResponse, true);
     
             if ($users == null && json_last_error() !== JSON_ERROR_NONE) {
                 throw new Exception('Error decoding JSON');

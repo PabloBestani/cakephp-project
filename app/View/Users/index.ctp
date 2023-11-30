@@ -5,11 +5,10 @@
 <?php else: ?>
 <ul>
     <?php foreach($users as $user): ?>
-        <!-- <li><?php echo $user->id ?></li> -->
-        <li><?php echo $user->name ?></li>
-        <li><?php echo $user->address ?></li>
-        <li><?php echo $user->email ?></li>
-        <li><?php echo $user->phone ?></li>
+        <li><?php echo $user['User']['id'] ?></li>
+        <li><?php echo 'Name: ' . $user['User']['name'] ?></li>
+        <li><?php echo 'Email: ' .  $user['User']['email'] ?></li>
+        <li><?php echo 'Phone: ' .  $user['User']['phone'] ?></li>
     <?php endforeach; ?>
 </ul>
 <?php endif; ?>

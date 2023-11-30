@@ -10,6 +10,7 @@
 /tags
 *.mo
 /logs/
+composer.lock
 
 # IDE and editor specific files #
 #################################

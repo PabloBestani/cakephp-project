@@ -5,7 +5,7 @@ App::uses('User','Model');
 App::uses('UserApiService', 'Service');
 
 class UsersController extends AppController {
-    public $components = array('RecordDeletion', 'RecordCreation');
+    public $components = array('RecordDeletion', 'RecordCreation', 'RecordUpdate');
     public $name = 'Users';
 
     public function index() {
@@ -49,6 +49,31 @@ class UsersController extends AppController {
             } else {
                 $this->Flash->error($result);
             }
+        } catch (\Throwable $th) {
+            $this->log($th);
+        }
+    }
+
+    public function update($id) {
+        try {
+            $user = $this->User->findById($id);
+            if (!$user) {
+                throw new Exception("No User found with id $id.");
+            };
+            $this->set('user', $user);   
+
+            if (!$this->request->is('post')) {
+                return;
+            };
+
+            $newData = $this->request->data;
+            $result = $this->RecordUpdate->updateRecord('User', $user, $newData);
+
+            if (!$result) return $this->Flash->error($result);
+            $this->set('user', $result);
+            $this->Flash->success('User updated successfully');
+            $this->redirect(array('action' => 'index'));
+
         } catch (\Throwable $th) {
             $this->log($th);
         }
